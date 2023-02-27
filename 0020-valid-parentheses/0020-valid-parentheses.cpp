@@ -1,28 +1,28 @@
 class Solution {
 public:
     bool isValid(string s) {
+        stack<char> bucket;
         
-        stack<char> st;
-        int length = s.size();
-        for(int i=0;i<length;i++)
+        for(int i=0;i<s.size();i++)
         {
-            if(st.empty())
+            if(bucket.empty())
             {
-                st.push(s[i]);
+                bucket.push(s[i]);
             }
-            else if((s[i]==')' && st.top()=='(') || (s[i]=='}' && st.top()=='{') || (s[i]==']' && st.top()=='[')){
-                st.pop();
+            else if( (bucket.top()=='(' && s[i]==')') || (bucket.top()=='[' && s[i]==']') || (bucket.top()=='{' && s[i]=='}'))
+            {
+                bucket.pop();
             }
             else
             {
-                st.push(s[i]);
+                bucket.push(s[i]);
             }
         }
-        if(st.empty())
+        if(bucket.empty())
         {
             return true;
         }
-        else 
+        else
         {
             return false;
         }
