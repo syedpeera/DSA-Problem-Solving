@@ -55,7 +55,8 @@ public:
         reverse(right.begin(),right.end());
         int maxArea=INT_MIN;
         for(int i=0;i<n;i++){
-            maxArea=max(maxArea,((right[i]-left[i]-1)*heights[i]));
+            int width = ((right[i]-left[i]-1)*heights[i]);
+            maxArea=max(maxArea,width);
         }
         return maxArea;
     }
