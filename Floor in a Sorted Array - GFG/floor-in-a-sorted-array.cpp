@@ -16,14 +16,13 @@ class Solution{
                 return mid;
             }
             else if(nums[mid]<x){
-                index=mid;
                 left=mid+1;
             }
             else{
                 right=mid-1;
             }
         }
-        return index;
+        return right;
     }
 };
 
