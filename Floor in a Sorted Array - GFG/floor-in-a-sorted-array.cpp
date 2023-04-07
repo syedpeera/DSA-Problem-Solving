@@ -9,7 +9,6 @@ class Solution{
     int findFloor(vector<long long> nums, long long n, long long x){
         long long left=0;
         long long right=n-1;
-        long long result=INT_MAX;
         int index=-1;
         while(left<=right){
             long long mid=left+(right-left)/2;
