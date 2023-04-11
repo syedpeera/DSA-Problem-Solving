@@ -30,10 +30,6 @@ public:
             if(nums[mid]<=nums[prev] && nums[mid]<=nums[next]){
                 return mid;
             }
-            else if(nums[mid]==nums[prev] && nums[mid]==nums[next]){
-                left++;
-                right--;
-            }
             else if(nums[left]<=nums[mid] && nums[mid]>=nums[right]){
                 left=mid+1;
             }
