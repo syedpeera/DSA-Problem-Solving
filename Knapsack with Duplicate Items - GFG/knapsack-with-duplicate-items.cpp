@@ -10,20 +10,24 @@ using namespace std;
 class Solution{
 public:
     int solveKnapSack(vector<vector<int>>& dp, int n, int w, int val[], int wt[]){
-        if(n==0 || w==0){
-            return 0;
+        for(int i=0; i<n+1; i++){
+            for(int j=0; j<w+1; j++){
+                if(i==0 || j==0){
+                    dp[i][j]=0;
+                }
+            }
         }
-        if(dp[n][w]!=-1){
-            return dp[n][w];
+        for(int i=1; i<n+1; i++){
+            for(int j=1; j<w+1; j++){
+                if(wt[i-1]<=j){
+                    dp[i][j] = max( (val[i-1]+dp[i][j-wt[i-1]]), dp[i-1][j]);
+                }
+                if(wt[i-1]>j){
+                    dp[i][j] = dp[i-1][j];
+                }
+            }
         }
-        if(wt[n-1]<=w){
-            dp[n][w] = max((val[n-1]+solveKnapSack(dp, n, w-wt[n-1], val, wt)), solveKnapSack(dp, n-1, w, val, wt));
-            return dp[n][w];
-        }
-        else if(wt[n-1]>w){
-            dp[n][w] = solveKnapSack(dp, n-1, w, val, wt);
-            return dp[n][w];
-        }
+        return dp[n][w];
     }
     int knapSack(int n, int w, int val[], int wt[])
     {
