@@ -10,30 +10,31 @@ using namespace std;
 
 class Solution{
   public:
-    int solveCutRod(vector<vector<int>>& dp, int price[], vector<int>& lengths, int n, int len){
-        if(n==0 || len==0){
-            return 0;
-        }
-        if(dp[n][len]!=-1){
-            return dp[n][len];
-        }
-        if(lengths[n-1]<=len){
-            dp[n][len] = max( (price[n-1]+solveCutRod(dp, price, lengths, n, len-lengths[n-1])), solveCutRod(dp, price, lengths, n-1, len));
-            return dp[n][len];
-        }
-        if(lengths[n-1]>len){
-            dp[n][len] = solveCutRod(dp, price, lengths, n-1, len);
-            return dp[n][len];
-        }
-    }
     int cutRod(int price[], int n) {
         vector<int> lengths;
         for(int i=0;i<n;i++){
             lengths.push_back(i+1);
         }
         int len=lengths.size();
-        vector<vector<int>> dp(n+1, vector<int>(len+1, -1));
-        return solveCutRod(dp, price, lengths, n, len);
+        vector<vector<int>> dp(n+1, vector<int>(len+1, 0));
+        for(int i=0;i<n+1;i++){
+            for(int j=0;j<len+1;j++){
+                if(i==0 || j==0){
+                    dp[i][j]=0;
+                }
+            }
+        }
+        for(int i=1;i<n+1;i++){
+            for(int j=1;j<len+1;j++){
+                if(lengths[i-1]<=j){
+                    dp[i][j] = max(price[i-1]+dp[i][j-lengths[i-1]], dp[i-1][j]);
+                }
+                if(lengths[i-1]>j){
+                    dp[i][j] = dp[i-1][j];
+                }    
+            }
+        }
+        return dp[n][len];
     }
 };
 
