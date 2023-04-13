@@ -16,25 +16,20 @@ class Solution{
             lengths.push_back(i+1);
         }
         int len=lengths.size();
-        vector<vector<int>> dp(n+1, vector<int>(len+1, 0));
-        for(int i=0;i<n+1;i++){
-            for(int j=0;j<len+1;j++){
-                if(i==0 || j==0){
-                    dp[i][j]=0;
-                }
-            }
-        }
+        vector<int> prev(len+1, 0);
+        vector<int> curr(len+1, 0);
         for(int i=1;i<n+1;i++){
             for(int j=1;j<len+1;j++){
                 if(lengths[i-1]<=j){
-                    dp[i][j] = max(price[i-1]+dp[i][j-lengths[i-1]], dp[i-1][j]);
+                    curr[j] = max(price[i-1]+curr[j-lengths[i-1]], prev[j]);
                 }
                 if(lengths[i-1]>j){
-                    dp[i][j] = dp[i-1][j];
+                    curr[j] = prev[j];
                 }    
             }
+            prev=curr;
         }
-        return dp[n][len];
+        return prev[len];
     }
 };
 
