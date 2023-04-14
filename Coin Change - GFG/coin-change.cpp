@@ -5,23 +5,28 @@ using namespace std;
 // } Driver Code Ends
 class Solution {
   public:
-    long long int count(int coins[], int n, int sum) {
-        vector<long long int> prev(sum+1, 0);
-        vector<long long int> curr(sum+1, 0);
-        prev[0]=1;
-        curr[0]=1;
-        for(int i=1; i<n+1; i++){
-            for(int j=1; j<sum+1; j++){
-                if(coins[i-1]<=j){
-                    curr[j] = curr[j-coins[i-1]] + prev[j];
-                }
-                if(coins[i-1]>j){
-                    curr[j] = prev[j];
-                }
-            }
-            prev=curr;
+    long long int solveCount(vector<vector<long long int>>& dp, int coins[], int n, int sum){
+        if(sum==0){
+            return 1;
         }
-        return prev[sum];
+        if(n==0){
+            return 0;
+        }
+        if(dp[n][sum]!=-1){
+            return dp[n][sum];
+        }
+        if(coins[n-1]<=sum){
+            dp[n][sum] = solveCount(dp, coins, n, sum-coins[n-1]) + solveCount(dp, coins, n-1, sum);   
+            return dp[n][sum];
+        }
+        if(coins[n-1]>sum){
+            dp[n][sum] = solveCount(dp, coins, n-1, sum);
+            return dp[n][sum];
+        }
+    }
+    long long int count(int coins[], int n, int sum) {
+        vector<vector<long long int>> dp(n+1, vector<long long int>(sum+1, -1));
+        return solveCount(dp, coins, n, sum);
     }
 };
 
