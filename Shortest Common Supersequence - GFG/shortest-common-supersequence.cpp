@@ -12,25 +12,26 @@ using namespace std;
 class Solution
 {
     public:
-    int LCS(string x, string y, int n, int m){
-        vector<int> prev(m+1, 0);
-        vector<int> curr(m+1, 0);
-        for(int i=1;i<n+1;i++){
-            for(int j=1;j<m+1;j++){
-                if(x[i-1]==y[j-1]){
-                    curr[j] = 1+prev[j-1];
-                }
-                else{
-                    curr[j] = max(curr[j-1], prev[j]);
-                }
-            }
-            prev=curr;
+    int LCS(vector<vector<int>>& dp, string x, string y, int n, int m){
+        if(n==0 || m==0){
+            return 0;
         }
-        return prev[m];
+        if(dp[n][m]!=-1){
+            return dp[n][m];
+        }
+        if(x[n-1]==y[m-1]){
+            dp[n][m] = 1+LCS(dp, x, y, n-1, m-1);
+            return dp[n][m];
+        }
+        else{
+            dp[n][m] = max(LCS(dp, x, y, n, m-1), LCS(dp, x, y, n-1, m));
+            return dp[n][m];
+        }
     }
     int shortestCommonSupersequence(string x, string y, int n, int m)
     {
-        return (n+m)-LCS(x, y, n, m);
+        vector<vector<int>> dp(n+1, vector<int>(m+1, -1));
+        return (n+m)-LCS(dp, x, y, n, m);
     }
 };
 
