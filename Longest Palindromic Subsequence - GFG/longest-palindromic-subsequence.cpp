@@ -10,21 +10,21 @@ using namespace std;
 
 class Solution{
   public:
-    int LCS(string s1, string s2, int n, int m){
-        vector<int> prev(m+1, 0);
-        vector<int> curr(m+1, 0);
-        for(int i=1;i<n+1;i++){
-            for(int j=1;j<m+1;j++){
-                if(s1[i-1]==s2[j-1]){
-                    curr[j] = 1+prev[j-1];
-                }
-                else{
-                    curr[j] = max(curr[j-1], prev[j]);
-                }
-            }
-            prev=curr;
+    int LCS(vector<vector<int>>& dp, string s1, string s2, int n, int m){
+        if(n==0 || m==0){
+            return 0;
         }
-        return prev[m];
+        if(dp[n][m]!=-1){
+            return dp[n][m];
+        }
+        if(s1[n-1]==s2[m-1]){
+            dp[n][m] = 1+LCS(dp, s1, s2, n-1, m-1);
+            return dp[n][m];
+        }
+        else{
+            dp[n][m] = max(LCS(dp, s1, s2, n, m-1), LCS(dp, s1, s2, n-1, m));
+            return dp[n][m];
+        }
     }
     string reverseString(string s){
         int left=0;
@@ -40,7 +40,8 @@ class Solution{
         string x = reverseString(s);
         int n=s.size();
         int m=x.size();
-        return LCS(s, x, n, m);
+        vector<vector<int>> dp(n+1, vector<int>(m+1, -1));
+        return LCS(dp, s, x, n, m);
     }
 };
 
