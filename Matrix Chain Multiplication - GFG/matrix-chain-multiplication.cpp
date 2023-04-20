@@ -9,25 +9,23 @@ using namespace std;
 
 class Solution{
 public:
-    int solve(vector<vector<int>>& dp, int arr[], int i, int j){
-        if(i>=j){
-            return 0;
-        }
-        if(dp[i][j]!=-1){
-            return dp[i][j];
-        }
-        int minVal=INT_MAX;
-        for(int k=i;k<j;k++){
-            int tempAns = solve(dp, arr, i, k) + solve(dp, arr, k+1, j) + arr[i-1]*arr[k]*arr[j];
-            minVal=min(minVal, tempAns);
-        }
-        dp[i][j]=minVal;
-        return dp[i][j];
-    }
     int matrixMultiplication(int n, int arr[])
     {
-        vector<vector<int>> dp(n+1, vector<int>(n+1, -1));
-        return solve(dp, arr, 1, n-1);
+        vector<vector<int>> dp(n+1, vector<int>(n+1, INT_MAX));
+        int minVal=INT_MAX;
+        for(int i=0;i<n;i++){
+            dp[i][i]=0;
+        }
+        for(int len=2;len<=n-1;len++){
+            for(int i=1;i<=n-len;i++){
+                int j=i+len-1;
+                for(int k=i;k<j;k++){
+                    int temp = dp[i][k] + dp[k+1][j] + arr[i-1]*arr[k]*arr[j];
+                    dp[i][j]=min(temp, dp[i][j]);
+                }
+            }
+        }
+        return dp[1][n-1];
     }
 };
 
