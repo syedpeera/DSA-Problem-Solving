@@ -14,32 +14,26 @@
  * }
  */
 class Solution {
-    int height(TreeNode root){
-        if(root==null){
-            return 0;
-        }
-        return 1+Math.max(height(root.left), height(root.right));
-    }
-
-    void printCurrentLevel(List<Integer> ans,TreeNode root, int level){
-        if(root==null){
-            return;
-        }
-        if(level==1){
-            ans.add(root.val);
-        }
-        else if(level>1){
-            printCurrentLevel(ans, root.left, level-1);
-            printCurrentLevel(ans, root.right, level-1);
-        }
-    }
-
     List<List<Integer>> levelOrder(TreeNode root) {
-        int h = height(root);
         List<List<Integer>> result = new ArrayList<>();
-        for(int i=1;i<=h;i++){
+        Queue<TreeNode> q = new LinkedList<>();
+        if(root==null){
+            return result;
+        }
+        q.add(root);
+        while(!q.isEmpty()){
+            int n = q.size();
             List<Integer> ans = new ArrayList<>();
-            printCurrentLevel(ans, root, i);
+            for(int i=0;i<n;i++){
+                TreeNode temp = q.poll();
+                if(temp.left!=null){
+                    q.add(temp.left);
+                }
+                if(temp.right!=null){
+                    q.add(temp.right);
+                }
+                ans.add(temp.val);
+            }
             result.add(ans);
         }
         return result;
