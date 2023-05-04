@@ -11,31 +11,27 @@
  */
 class Solution {
 public:
-    int height(TreeNode* root){
-        if(root==NULL){
-            return 0;
-        }
-        return 1+max(height(root->left), height(root->right));
-    }
-
-    void printCurrentLevel(vector<int>& ans,TreeNode* root, int level){
-        if(root==NULL){
-            return;
-        }
-        if(level==1){
-            ans.push_back(root->val);
-        }
-        else if(level>1){
-            printCurrentLevel(ans, root->left, level-1);
-            printCurrentLevel(ans, root->right, level-1);
-        }
-    }
     vector<vector<int>> levelOrder(TreeNode* root) {
-        int h = height(root);
         vector<vector<int>> result;
-        for(int i=1;i<=h;i++){
+        if(root==NULL){
+            return result;
+        }
+        queue<TreeNode*> q;
+        q.push(root);
+        while(!q.empty()){
+            int n = q.size();
             vector<int> ans;
-            printCurrentLevel(ans, root, i);
+            for(int i=0;i<n;i++){
+                TreeNode* temp = q.front();
+                q.pop();
+                if(temp->left!=NULL){
+                    q.push(temp->left);
+                }
+                if(temp->right!=NULL){
+                    q.push(temp->right);
+                }
+                ans.push_back(temp->val);
+            }
             result.push_back(ans);
         }
         return result;
