@@ -116,19 +116,25 @@ class GfG {
 }*/
 
 class Solution {
-    int diameter=0;
-    int height(Node root){
+    static class Diameter{
+        int diameter=0;
+        Diameter(int diameter){
+            this.diameter=diameter;
+        }
+    }
+    int height(Node root, Diameter d){
         if(root==null){
             return 0;
         }
-        int leftHeight = height(root.left);
-        int rightHeight = height(root.right);
-        diameter = Math.max(diameter, 1+leftHeight+rightHeight);
+        int leftHeight = height(root.left, d);
+        int rightHeight = height(root.right, d);
+        d.diameter = Math.max(d.diameter, 1+leftHeight+rightHeight);
         //If you want to count the edges and not the nodes then just do leftHeight+rightHeight
         return 1+Math.max(leftHeight, rightHeight);
     }
     int diameter(Node root) {
-        height(root);
-        return diameter;
+        Diameter d = new Diameter(0);
+        height(root, d);
+        return d.diameter;
     }
 }
