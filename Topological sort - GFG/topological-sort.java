@@ -70,10 +70,9 @@ class Solution
             }   
         }
         int topologicalSort[] = new int[v];
-        int k=0;
-        for(int i=0;i<v;i++){
-            int element = stack.pop();
-            topologicalSort[k++]=element;
+        int i=0;
+        while(!stack.isEmpty()){
+            topologicalSort[i++]=stack.pop();
         }
         return topologicalSort;
     }
