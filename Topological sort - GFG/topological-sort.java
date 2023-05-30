@@ -62,28 +62,37 @@ class Solution
 {
     static int[] topoSort(int v, ArrayList<ArrayList<Integer>> adj) 
     {
-        boolean visited[] = new boolean[v];
-        Stack<Integer> stack = new Stack<>();
-        for(int i=0;i<v;i++){
-            if(!visited[i]){
-                dfs(i, adj, visited, stack);
-            }   
+        int inDegree[] = new int[v];
+        for(ArrayList<Integer> list: adj){
+            for(int element: list){
+                inDegree[element]++;
+            }
         }
+        ArrayList<Integer> ans = new ArrayList<>();
+        bfs(v, adj, inDegree, ans);
         int topologicalSort[] = new int[v];
         int i=0;
-        while(!stack.isEmpty()){
-            topologicalSort[i++]=stack.pop();
+        for(int element: ans){
+            topologicalSort[i++]=element;
         }
         return topologicalSort;
     }
-    public static void dfs(int v, ArrayList<ArrayList<Integer>> adj, boolean visited[], Stack<Integer> stack){
-        visited[v]=true;
-        ArrayList<Integer> neighbors = adj.get(v);
-        for(int neighbor: neighbors){
-            if(!visited[neighbor]){
-                dfs(neighbor, adj, visited, stack);  
+    public static void bfs(int v, ArrayList<ArrayList<Integer>> adj, int inDegree[], ArrayList<Integer> ans){
+        Queue<Integer> q = new LinkedList<>();
+        for(int i=0;i<v;i++){
+            if(inDegree[i]==0){
+                q.add(i);
             }
         }
-        stack.add(v);
+        while(!q.isEmpty()){
+            int curr = q.poll();
+            ans.add(curr);
+            ArrayList<Integer> neighbors = adj.get(curr);
+            for(int neighbor: neighbors){
+                if(--inDegree[neighbor]==0){
+                    q.add(neighbor);
+                }
+            }
+        }
     }
 }
