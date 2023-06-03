@@ -16,7 +16,7 @@ public:
         {
             if(direction==0)
             {
-                for(int i=left;i<=right && top<=bottom;i++)
+                for(int i=left;i<=right;i++)
                 {
                     ans.push_back(matrix[top][i]);
                 }
@@ -24,7 +24,7 @@ public:
             }
             else if(direction==1)
             {
-                for(int i=top;i<=bottom && left<=right;i++)
+                for(int i=top;i<=bottom;i++)
                 {
                     ans.push_back(matrix[i][right]);
                 }
@@ -32,7 +32,7 @@ public:
             }
             else if(direction==2)
             {
-                for(int i=right;i>=left && top<=bottom;i--)
+                for(int i=right;i>=left;i--)
                 {
                     ans.push_back(matrix[bottom][i]);
                 }
@@ -40,7 +40,7 @@ public:
             }
             else if(direction==3)
             {
-                for(int i=bottom;i>=top && left<=right;i--)
+                for(int i=bottom;i>=top;i--)
                 {
                     ans.push_back(matrix[i][left]);
                 }
