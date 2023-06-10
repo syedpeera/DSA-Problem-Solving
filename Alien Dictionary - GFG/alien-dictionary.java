@@ -115,10 +115,10 @@ class Solution
                 topologicalSort(i, adj, visited, stack);
             }
         }
-        String result = "";
+        StringBuilder result = new StringBuilder();
         while(!stack.isEmpty()){
-            result = result + (char)(stack.pop()+(int)('a'));
+            result.append((char)(stack.pop()+(int)('a')));
         }
-        return result;
+        return result.toString();
     }
 }
