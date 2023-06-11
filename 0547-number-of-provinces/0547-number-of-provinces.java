@@ -1,10 +1,25 @@
 class Solution {
+    /*
     public void dfs(int v, List<List<Integer>> adj, boolean visited[]){
         visited[v]=true;
         List<Integer> neighbors = adj.get(v);
         for(int neighbor: neighbors){
             if(!visited[neighbor]){
                 dfs(neighbor, adj, visited);
+            }
+        }
+    }*/
+    public void bfs(int v, List<List<Integer>> adj, boolean visited[]){
+        Queue<Integer> queue = new ArrayDeque<>();
+        queue.add(v);
+        visited[v]=true;
+        while(!queue.isEmpty()){
+            int curr = queue.poll();
+            for(int neighbor: adj.get(curr)){
+                if(!visited[neighbor]){
+                    queue.add(neighbor);
+                    visited[neighbor]=true;
+                }
             }
         }
     }
@@ -21,9 +36,16 @@ class Solution {
         }
         int count=0;
         boolean visited[] = new boolean[n];
+        /*
         for(int i=0;i<n;i++){
             if(!visited[i]){
                 dfs(i, adj, visited);
+                count++;
+            }
+        }*/
+        for(int i=0;i<n;i++){
+            if(!visited[i]){
+                bfs(i, adj, visited);
                 count++;
             }
         }
