@@ -17,13 +17,26 @@ public:
         if(list2==NULL){
             return list1;
         }
-        if(list1->val <= list2->val){
-            list1->next = mergeTwoLists(list1->next, list2);
-            return list1;
+        //make sure list1 always points to the minimum element node
+        if(list1->val > list2->val){
+            ListNode* temp = list1;
+            list1 = list2;
+            list2 = temp;
         }
-        else{
-            list2->next = mergeTwoLists(list1, list2->next);
-            return list2;
+        ListNode *result=list1;
+        while(list1!=NULL && list2!=NULL){
+            ListNode* temp = NULL;
+            while(list1!=NULL && list1->val <= list2->val){
+                temp = list1;
+                list1 = list1->next;
+            }
+            temp->next = list2;
+            
+            //swap to make sure list1 always points to the minimum element node
+            ListNode* tmp = list1;
+            list1 = list2;
+            list2 = tmp;
         }
+        return result;
     }
 };
