@@ -11,7 +11,6 @@ public:
             sum = sum - nums[i];
             if(leftSum == sum){
                 return i;
-                break;
             }
             leftSum += nums[i];
         }
