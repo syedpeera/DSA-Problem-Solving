@@ -18,13 +18,6 @@ public:
                 bucket.push(s[i]);
             }
         }
-        if(bucket.empty())
-        {
-            return true;
-        }
-        else
-        {
-            return false;
-        }
+        return bucket.empty();
     }
 };
