@@ -5,9 +5,6 @@ public:
         int left=0;
         int right=n-1;
         while(left<=right){
-            if(nums[left]<=nums[right]){
-                return nums[left];
-            }
             int mid=left+(right-left)/2;
             int next=(mid+1)%n;
             int prev=(mid-1+n)%n;
@@ -17,7 +14,7 @@ public:
             else if(nums[left]<=nums[mid] && nums[mid]>=nums[right]){
                 left=mid+1;
             }
-            else if(nums[left]>=nums[mid]&& nums[mid]<=nums[right]){
+            else{
                 right=mid-1;
             }
         }
