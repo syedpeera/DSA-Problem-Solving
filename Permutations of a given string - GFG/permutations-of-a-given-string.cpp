@@ -6,23 +6,23 @@ using namespace std;
 class Solution
 {
 	public:
-	void permutation(string &s, vector<string> &result, int left, int right){
-	    if(left==right){
+	void permutation(string &s, vector<string> &result, int l, int r){
+	    if(l==r){
 	        result.push_back(s);
 	    }
 	    else{
-	        for(int i=left;i<=right;i++){
+	        for(int i=l;i<=r;i++){
 	            bool shouldSwap = true;
-	            for(int j=left;j<i;j++){
+	            for(int j=l;j<i;j++){
 	                if(s[j]==s[i]){
 	                    shouldSwap = false;
 	                    break;
 	                }
 	            }
 	            if(shouldSwap){
-	                swap(s[left], s[i]);
-    	            permutation(s, result, left+1, right);
-    	            swap(s[left], s[i]);
+	                swap(s[l], s[i]);
+    	            permutation(s, result, l+1, r);
+    	            swap(s[l], s[i]);
 	            }
 	        }
 	    }
