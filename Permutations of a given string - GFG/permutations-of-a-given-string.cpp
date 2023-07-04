@@ -31,6 +31,7 @@ class Solution
 	{
 	    vector<string> result;
         permutation(s, result, 0, s.size()-1);
+        sort(result.begin(), result.end());
         return result;
 	}
 };
