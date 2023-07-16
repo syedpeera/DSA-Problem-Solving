@@ -15,7 +15,7 @@ class Solution {
         }
         
         ListNode firstHalfEnd = findFirstHalfEnd(head);
-        ListNode secondHalfStart = reverseList(firstHalfEnd.next);
+        ListNode secondHalfStart = reverseList(firstHalfEnd);
         
         ListNode p1 = head;
         ListNode p2 = secondHalfStart;
@@ -38,7 +38,7 @@ class Solution {
         ListNode slow = head;
         ListNode fast = head;
         
-        while(fast.next != null && fast.next.next != null){
+        while(fast != null && fast.next != null){
             slow = slow.next;
             fast = fast.next.next;
         }
