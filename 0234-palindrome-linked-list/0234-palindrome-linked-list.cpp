@@ -11,6 +11,10 @@
 class Solution {
 public:
     bool isPalindrome(ListNode* head) {
+        if(head == NULL || head->next == NULL){
+            return true;
+        }
+        
         ListNode* firstHalfEnd = findFirstHalfEnd(head);
         ListNode* secondHalfStart = reverseList(firstHalfEnd->next);
         
