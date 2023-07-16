@@ -31,6 +31,8 @@ class Solution {
             p2 = p2.next;
         }
         
+        firstHalfEnd.next = reverseList(secondHalfStart);
+        
         return isPalindrome;
     }
     
