@@ -1,68 +1,43 @@
 class Solution {
 public:
     string minWindow(string s, string t) {
-        int n=s.size();
-        int k=t.size();
-        unordered_map<char, int> m;
-        for(int i=0;i<k;i++){
-            m[t[i]]++;
-        }
-        int i=0;
-        int j=0;
-        int count=m.size();
-        int minLen=INT_MAX;
-        int start=0;
-        int end=0;
-        while(j<n){
-            if(m.find(s[j])!=m.end()){
-                m[s[j]]--;
-                if(m[s[j]]==0){
-                    count--;
-                }
-            }
-            if(count>0){
-                j++;
-            }
-            else if(count==0){
-                if(minLen>j-i+1){
-                    minLen=j-i+1;
-                    start=i;
-                    end=j;
-                }
-                while(count==0){
-                    if(m.find(s[i])==m.end()){
-                        i++;
-                        if(minLen>j-i+1){
-                            minLen=j-i+1;
-                            start=i;
-                            end=j;
-                        }
-                    }
-                    else{
-                        m[s[i]]++;
-                        if(m[s[i]]>0){
-                            i++;
-                            count++;
-                        }
-                        else{
-                            i++;
-                            if(minLen>j-i+1){
-                                minLen=j-i+1;
-                                start=i;
-                                end=j;
-                            }
-                        }
-                    }
-                }
-                j++;
+        unordered_map<char, int> targetChars;
+    for (char c : t) {
+        targetChars[c]++;
+    }
+
+    int left = 0;
+    int minLen = INT_MAX;
+    int minStart = 0;
+    int requiredChars = targetChars.size();
+
+    for (int right = 0; right < s.length(); right++) {
+        char rightChar = s[right];
+        if (targetChars.count(rightChar)) {
+            targetChars[rightChar]--;
+            if (targetChars[rightChar] == 0) {
+                requiredChars--;
             }
         }
-        string result="";
-        if(minLen!=INT_MAX){
-            for(int index=start;index<=end;index++){
-                result=result+s[index];    
+
+        while (requiredChars == 0) {
+            if (right - left + 1 < minLen) {
+                minLen = right - left + 1;
+                minStart = left;
             }
+
+            char leftChar = s[left];
+            if (targetChars.count(leftChar)) {
+                targetChars[leftChar]++;
+                if (targetChars[leftChar] > 0) {
+                    requiredChars++;
+                }
+            }
+
+            left++;
         }
-        return result;
+    }
+
+    return minLen == INT_MAX ? "" : s.substr(minStart, minLen);
     }
 };
