@@ -22,7 +22,6 @@ class Solution {
                 if(right-left+1 < minLen){
                     minLen = right-left+1;
                     result = s.substring(left, right+1);
-                    //minStart = left;
                 }
                 
                 if(tFreq.containsKey(s.charAt(left))){
