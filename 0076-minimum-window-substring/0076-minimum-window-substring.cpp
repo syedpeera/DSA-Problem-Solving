@@ -10,7 +10,6 @@ public:
         int minLen = INT_MAX;
         int required = tFreq.size();
         int minStart = 0;
-        string result = "";
         
         for(int right=0; right<s.size(); right++) {
             if (tFreq.find(s[right]) != tFreq.end()) {
