@@ -1,17 +1,35 @@
 class Solution {
 public:
-    int lengthOfLIS(vector<int>& nums) {
-        int n = nums.size();
-        vector<int> dp(n, 1);
-        int maxLen = 1;
-        for(int i=1;i<n;i++){
-            for(int j=0;j<i;j++){
-                if(nums[i] > nums[j]){
-                    dp[i] = max(dp[i], dp[j]+1);
-                }
+    int cielBinarySearch(vector<int> &temp, int target){
+        int left = 0;
+        int right = temp.size()-1;
+        while(left <= right){
+            int mid = left + (right-left)/2;
+            if(temp[mid] == target){
+                return mid;
             }
-            maxLen = max(maxLen, dp[i]);
+            else if(temp[mid] < target){
+                left = mid + 1;
+            }
+            else{
+                right = mid - 1;
+            }
         }
-        return maxLen;
+        return left;
+    }
+    int lengthOfLIS(vector<int>& nums) {
+        vector<int> temp;
+        temp.push_back(nums[0]);
+        
+        for(int i=1; i<nums.size(); i++){
+            if(nums[i] > temp.back()){
+                temp.push_back(nums[i]);
+            }
+            else{
+                int index = cielBinarySearch(temp, nums[i]);
+                temp[index] = nums[i];
+            }
+        }
+        return temp.size();
     }
 };
