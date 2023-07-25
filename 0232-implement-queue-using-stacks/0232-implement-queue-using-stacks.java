@@ -8,8 +8,14 @@ class MyQueue {
     }
     
     public void push(int x) {
-        if(stack1.isEmpty()){
-            stack1.add(x);
+        stack1.add(x);
+    }
+    
+    public int pop() {
+        if(!stack2.isEmpty()){
+            int element = stack2.peek();
+            stack2.pop();
+            return element;
         }
         else{
             while(!stack1.isEmpty()){
@@ -17,23 +23,23 @@ class MyQueue {
                 stack1.pop();
             }
             
-            stack1.add(x);
-            
-            while(!stack2.isEmpty()){
-                stack1.add(stack2.peek());
-                stack2.pop();
-            }
+            int element = stack2.peek();
+            stack2.pop();
+            return element;
         }
     }
     
-    public int pop() {
-        int element = stack1.peek();
-        stack1.pop();
-        return element;
-    }
-    
     public int peek() {
-        return stack1.peek();
+        if(!stack2.isEmpty()){
+            return stack2.peek();
+        }
+        else{
+            while(!stack1.isEmpty()){
+                stack2.add(stack1.peek());
+                stack1.pop();
+            }
+            return stack2.peek();
+        }
     }
     
     public boolean empty() {
