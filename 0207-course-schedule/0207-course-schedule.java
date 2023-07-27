@@ -1,20 +1,21 @@
 class Solution {
-    public boolean dfs(int v, ArrayList<ArrayList<Integer>> graph, boolean[] visited, boolean[] callStack ){
-        visited[v]=true;
-        callStack[v]=true;
-        ArrayList<Integer> neighbors = graph.get(v);
-        for(int neighbor: neighbors){
-            if(!visited[neighbor]){
-                if(dfs(neighbor, graph, visited, callStack)){
-                    return true;
-                }
-            }
-            else if(callStack[neighbor]){
-                return true;
+    public void bfs(int v, ArrayList<ArrayList<Integer>> adj, int inDegree[], ArrayList<Integer> topologicalSort){
+        Queue<Integer> q = new LinkedList<>();
+        for(int i=0; i<v; i++){
+            if(inDegree[i] == 0){
+                q.add(i);
             }
         }
-        callStack[v]=false;
-        return false;
+        while(!q.isEmpty()){
+            int curr = q.poll();
+            topologicalSort.add(curr);
+            ArrayList<Integer> neighbors = adj.get(curr);
+            for(int neighbor: neighbors){
+                if(--inDegree[neighbor] == 0){
+                    q.add(neighbor);
+                }
+            }
+        }
     }
     public boolean canFinish(int numCourses, int[][] prerequisites) {
         ArrayList<ArrayList<Integer>> graph = new ArrayList<>();
@@ -26,16 +27,15 @@ class Solution {
             int prerequisiteCourse = prerequisite[1];
             graph.get(course).add(prerequisiteCourse);
         }
-        boolean visited[] = new boolean[numCourses];
-        boolean callStack[] = new boolean[numCourses];
         
-        for(int i=0;i<numCourses;i++){
-            if(!visited[i]){
-                if(dfs(i, graph, visited, callStack)){
-                    return false;
-                }
+        int inDegree[] = new int[numCourses];
+        for(ArrayList<Integer> list: graph){
+            for(int element: list){
+                inDegree[element]++;
             }
         }
-        return true;
+        ArrayList<Integer> topologicalSort = new ArrayList<>();
+        bfs(numCourses, graph, inDegree, topologicalSort);
+        return topologicalSort.size() == numCourses;
     }
 }
