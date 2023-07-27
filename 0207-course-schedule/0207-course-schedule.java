@@ -25,7 +25,7 @@ class Solution {
         for(int[] prerequisite: prerequisites){
             int course = prerequisite[0];
             int prerequisiteCourse = prerequisite[1];
-            graph.get(course).add(prerequisiteCourse);
+            graph.get(prerequisiteCourse).add(course);
         }
         
         int inDegree[] = new int[numCourses];
