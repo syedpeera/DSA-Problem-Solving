@@ -17,24 +17,29 @@ public:
         }
         return false;
     }
-    int solveMaxLength(int index, vector<string> &arr, string current, int n){
+    int solveMaxLength(int index, vector<string> &arr, string current, int n, unordered_map<string, int> &dp){
         if(index == n){
             return current.size();
+        }
+        if(dp.find(current) != dp.end()){
+            return dp[current];
         }
         int include = 0;
         int exclude = 0;
         if(hasDuplicate(arr[index], current)){
-            exclude = solveMaxLength(index+1, arr, current, n);
+            exclude = solveMaxLength(index+1, arr, current, n, dp);
         }
         else{
-            include = solveMaxLength(index+1, arr, current+arr[index], n);
-            exclude = solveMaxLength(index+1, arr, current, n);
+            include = solveMaxLength(index+1, arr, current+arr[index], n, dp);
+            exclude = solveMaxLength(index+1, arr, current, n, dp);
         }
-        return max(include, exclude);
+        dp[current] = max(include, exclude);
+        return dp[current];
     }
     int maxLength(vector<string>& arr) {
         int n = arr.size();
         string current = "";
-        return solveMaxLength(0, arr, current, n);
+        unordered_map<string, int> dp;
+        return solveMaxLength(0, arr, current, n, dp);
     }
 };
