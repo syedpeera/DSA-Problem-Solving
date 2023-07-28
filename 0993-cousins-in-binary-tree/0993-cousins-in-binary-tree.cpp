@@ -17,14 +17,17 @@ public:
         findDepthAndParent(root->left, root, x, y, depth+1, xDepth, yDepth, xParent, yParent);
         findDepthAndParent(root->right, root, x, y, depth+1, xDepth, yDepth, xParent, yParent);
     }
-    
     bool isCousins(TreeNode* root, int x, int y) {
         int xDepth = -1;
         int yDepth = -1;
         TreeNode* xParent = nullptr;
         TreeNode* yParent = nullptr;
         findDepthAndParent(root, nullptr, x, y, 0, xDepth, yDepth, xParent, yParent);
-        
-        return xDepth == yDepth && xParent != yParent;
+        if(xDepth == yDepth && xParent != yParent){
+            return true;
+        }
+        else{
+            return false;
+        }
     }
 };
