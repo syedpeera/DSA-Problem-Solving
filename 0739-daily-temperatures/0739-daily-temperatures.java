@@ -1,42 +1,20 @@
 class Solution {
-    public void reverse(int[] output, int left, int right){
-        while(left < right){
-            int temp = output[left];
-            output[left] = output[right];
-            output[right] = temp;
-            
-            left++;
-            right--;
-        }
-    }
     public int[] dailyTemperatures(int[] temperatures) {
-        Stack<Integer> bucket = new Stack<>();
         int n = temperatures.length;
-        int output[] = new int[n];
-        int j=0;
-        
+        int hottest = Integer.MIN_VALUE;
+        int result[] = new int[n];
         for(int i=n-1; i>=0; i--){
-            if(bucket.isEmpty()){
-                output[j++] = 0;
-                bucket.add(i);
+            if(temperatures[i] >= hottest){
+                hottest = temperatures[i];
             }
             else{
-                while(!bucket.isEmpty() && temperatures[bucket.peek()] <= temperatures[i]){
-                    bucket.pop();
+                int it = i+1;
+                while(temperatures[it] <= temperatures[i]){
+                    it = it + result[it];
                 }
-                if(bucket.isEmpty()){
-                    output[j++] = 0;
-                    bucket.add(i);
-                }
-                else{
-                    output[j++] = bucket.peek() - i;
-                    bucket.add(i);
-                }
+                result[i] = it - i;
             }
         }
-        
-        reverse(output, 0, n-1);
-        
-        return output;
+        return result;
     }
 }
