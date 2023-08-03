@@ -11,7 +11,7 @@
  */
 class Solution {
 public:
-    bool solveFindTarget(TreeNode* root, int k, set<int> &set){
+    bool solveFindTarget(TreeNode* root, int k, unordered_set<int> &set){
         if(root == nullptr){
             return false;
         }
@@ -22,7 +22,7 @@ public:
         return solveFindTarget(root->left, k, set) || solveFindTarget(root->right, k, set);
     }
     bool findTarget(TreeNode* root, int k) {
-        set<int> set;
+        unordered_set<int> set;
         return solveFindTarget(root, k, set);
     }
 };
