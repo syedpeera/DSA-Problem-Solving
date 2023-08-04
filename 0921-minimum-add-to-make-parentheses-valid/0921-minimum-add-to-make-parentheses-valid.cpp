@@ -1,20 +1,18 @@
 class Solution {
 public:
     int minAddToMakeValid(string s) {
-        stack<char> bucket;
         int n = s.size();
+        int bracket = 0;
+        int result = 0;
         for(int i=0; i<n; i++){
             char ch = s[i];
-            if(ch == '('){
-                bucket.push(ch);
-            }
-            else if(!bucket.empty() && bucket.top() == '(' && ch == ')'){
-                bucket.pop();
-            }
-            else{
-                bucket.push(ch);
+            bracket = bracket + (ch == '('? 1: -1);
+            
+            if(bracket == -1){
+                result++;
+                bracket++;
             }
         }
-        return bucket.size();
+        return result + bracket;
     }
 };
