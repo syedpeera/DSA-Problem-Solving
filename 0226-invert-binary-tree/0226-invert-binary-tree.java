@@ -18,8 +18,8 @@ class Solution {
         if(root==null){
             return;
         }
-        invertTree(root.left);
-        invertTree(root.right);
+        solve(root.left);
+        solve(root.right);
         
         TreeNode temp = root.left;
         root.left = root.right;
