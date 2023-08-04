@@ -12,7 +12,7 @@ class Solution {
                 end = Math.min(end, intervals[i][1]); //Update end time
             }
             else{
-                end = intervals[i][1]; //Non-overlapping interval, update end time
+                end = Math.max(end, intervals[i][1]); //Non-overlapping interval, update end time
             }
         }
         return count;
