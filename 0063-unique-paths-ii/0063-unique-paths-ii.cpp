@@ -27,7 +27,7 @@ public:
                     curr[j] = prev[j] + curr[j - 1];
                 }
             }
-            swap(prev, curr);
+            prev = curr;
         }
         
         return prev[n - 1];
